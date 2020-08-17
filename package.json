@@ -2,9 +2,9 @@
   "name": "mnagemen",
   "version": "1.0.0",
   "scripts": {
-    "clinet": "cd clinet && yarn start",
-    "server": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn cline\""
+    "client": "cd client && yarn start",
+    "server": "node server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "dependencies": {
     "body-parser": "^1.18.3",
