@@ -8,6 +8,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import { withStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = (theme) => ({
   root: {
@@ -18,13 +19,18 @@ const styles = (theme) => ({
   table: {
     minWidth: 1080,
   },
+  progress: {
+    margin: theme.spacing.unit * 2,
+  },
 });
 
 class App extends Component {
   state = {
     customer: "",
+    completed: 0,
   };
   componentDidMount() {
+    this.timer = setInterval(this.progress, 20);
     this.callApi()
       .then((res) => this.setState({ customer: res }))
       .catch((err) => console.log(err));
@@ -33,6 +39,10 @@ class App extends Component {
     const response = await fetch("/api/customer");
     const body = await response.json();
     return body;
+  };
+  progress = () => {
+    const { completed } = this.state;
+    this.setState({ completed: completed >= 100 ? 0 : completed + 1 });
   };
   render() {
     const { classes } = this.props;
@@ -50,21 +60,31 @@ class App extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.state.customer
-              ? this.state.customer.map((c) => {
-                  return (
-                    <Customer
-                      key={c.id} // map이라는 메서드를 이용시에는 key값을 설정해줘야하고 중복되지 않는값으로 정의해주면된다.
-                      id={c.id}
-                      image={c.image}
-                      name={c.name}
-                      birthday={c.birthday}
-                      gender={c.gender}
-                      job={c.job}
-                    />
-                  );
-                })
-              : ""}
+            {this.state.customer ? (
+              this.state.customer.map((c) => {
+                return (
+                  <Customer
+                    key={c.id} // map이라는 메서드를 이용시에는 key값을 설정해줘야하고 중복되지 않는값으로 정의해주면된다.
+                    id={c.id}
+                    image={c.image}
+                    name={c.name}
+                    birthday={c.birthday}
+                    gender={c.gender}
+                    job={c.job}
+                  />
+                );
+              })
+            ) : (
+              <TableRow>
+                <TableCell colSpan="6" align="center">
+                  <CircularProgress
+                    className={classes.progress}
+                    variant="determinate"
+                    value={this.state.completed}
+                  />
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </Paper>
