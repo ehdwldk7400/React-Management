@@ -40,11 +40,7 @@ app.post("/api/customer", upload.single("image"), (req, res) => {
   let birthday = req.body.birthday;
   let gender = req.body.gender;
   let job = req.body.job;
-  console.log(image);
-  console.log(name);
-  console.log(birthday);
-  console.log(gender);
-  console.log(job);
+
   let params = [image, name, birthday, gender, job];
   connection.query(sql, params, (err, rows, fields) => {
     res.send(rows);
