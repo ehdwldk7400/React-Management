@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Customer from "./compoents/Customer";
+import CustomerAdd from "./compoents/CustomerAdd";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
@@ -13,14 +14,14 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 const styles = (theme) => ({
   root: {
     width: "100%",
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
     overflowX: "auto",
   },
   table: {
     minWidth: 1080,
   },
   progress: {
-    margin: theme.spacing.unit * 2,
+    margin: theme.spacing(2),
   },
 });
 
@@ -47,47 +48,50 @@ class App extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Paper className={classes.root}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>번호</TableCell>
-              <TableCell>이미지</TableCell>
-              <TableCell>이름</TableCell>
-              <TableCell>생년월일</TableCell>
-              <TableCell>성별</TableCell>
-              <TableCell>직업</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {this.state.customer ? (
-              this.state.customer.map((c) => {
-                return (
-                  <Customer
-                    key={c.id} // map이라는 메서드를 이용시에는 key값을 설정해줘야하고 중복되지 않는값으로 정의해주면된다.
-                    id={c.id}
-                    image={c.image}
-                    name={c.name}
-                    birthday={c.birthday}
-                    gender={c.gender}
-                    job={c.job}
-                  />
-                );
-              })
-            ) : (
+      <div>
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
               <TableRow>
-                <TableCell colSpan="6" align="center">
-                  <CircularProgress
-                    className={classes.progress}
-                    variant="determinate"
-                    value={this.state.completed}
-                  />
-                </TableCell>
+                <TableCell>번호</TableCell>
+                <TableCell>이미지</TableCell>
+                <TableCell>이름</TableCell>
+                <TableCell>생년월일</TableCell>
+                <TableCell>성별</TableCell>
+                <TableCell>직업</TableCell>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </Paper>
+            </TableHead>
+            <TableBody>
+              {this.state.customer ? (
+                this.state.customer.map((c) => {
+                  return (
+                    <Customer
+                      key={c.id} // map이라는 메서드를 이용시에는 key값을 설정해줘야하고 중복되지 않는값으로 정의해주면된다.
+                      id={c.id}
+                      image={c.image}
+                      name={c.name}
+                      birthday={c.birthday}
+                      gender={c.gender}
+                      job={c.job}
+                    />
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell colSpan="6" align="center">
+                    <CircularProgress
+                      className={classes.progress}
+                      variant="determinate"
+                      value={this.state.completed}
+                    />
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </Paper>
+        <CustomerAdd />
+      </div>
     );
   }
 }
