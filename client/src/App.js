@@ -69,6 +69,7 @@ class App extends Component {
                 <TableCell>생년월일</TableCell>
                 <TableCell>성별</TableCell>
                 <TableCell>직업</TableCell>
+                <TableCell>설정</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -76,6 +77,7 @@ class App extends Component {
                 this.state.customer.map((c) => {
                   return (
                     <Customer
+                      stateRefresh={this.stateRefresh}
                       key={c.id} // map이라는 메서드를 이용시에는 key값을 설정해줘야하고 중복되지 않는값으로 정의해주면된다.
                       id={c.id}
                       image={c.image}
